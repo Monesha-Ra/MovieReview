@@ -1,0 +1,566 @@
+body.dark-mode {
+    background-color:#0F0E0E; /* Dark background color */
+    color: #fff; /* Light text color */
+}
+
+body {
+    background-color:#202020; /* Dark background color */
+    color: #fff; /* Light text color */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style for the header bar */
+.header {
+    background-color:#0F0E0E;
+    color:#EEEEEE;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height:52px;
+    
+}
+
+/* Style for the menu icon */
+.menu-icon {
+    font-size: 24px;
+}
+
+/* Style for the logo */
+.logo img {
+    width: 200px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 auto; /* Center the logo horizontally */
+    display: block;
+}
+
+.logo{
+
+    text-align: center; /* Center the logo */
+    margin-left: 220px;
+    
+}
+/* Style for search icon */
+#search-icon {
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #f0f0f0 ; /* Adjust color as needed */
+    z-index: 1;
+    margin-top: 2px;
+}
+
+/* Adjust search bar width to accommodate icon */
+#search-bar {
+    padding-right: 30px; /* Adjust as needed based on icon size */
+    border-radius: 30px;
+    margin-top: 5px;;
+}
+
+/* Style for search results container */
+#search-results {
+    position: absolute;
+    top: 100%; /* Position it just below the search bar */
+    left: 0;
+    z-index: 1000; /* Ensure it appears above other elements */
+    background-color:#444 ; /* Background color */
+    border: 1px solid #444; /* Border */
+    border-top: none; /* Hide top border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
+    max-height: 200px; /* Limit the height of the dropdown */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    position: absolute;
+    top: calc(100% + 10px); /* Position just below the search input */
+    left: 0;
+    z-index: 1000; 
+    color:#333;
+}
+
+/* Style for individual search results */
+#search-results div {
+    padding: 10px; /* Add padding for better spacing */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    color:#333;
+}
+
+/* Style for hover effect on search results */
+#search-results div:hover {
+     /* Background color on hover */
+    color:#444;
+}
+.search-container {
+    position: relative;
+    color:#333;
+    
+    
+}
+.fas.fa-search {
+    /* Add any custom styling here */
+    color:  #f0f0f0; /* Adjust color as needed */
+}
+/* Style for scrollbar */
+::-webkit-scrollbar {
+    width: 15px; /* Width of the scrollbar */
+}
+
+/* Style for scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    background-color: white; /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Rounded edges */
+}
+
+/* Style for scrollbar track */
+::-webkit-scrollbar-track {
+    background-color: #444; /* Color of the scrollbar track */
+    border-radius: 10px; /* Rounded edges */
+}
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+
+.movies-container{
+    padding:20px;
+    margin-left:40px;
+}
+
+.login-box {
+    background-color: #444; /* Darker box color */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    width: 300px;
+    text-align: center;
+}
+
+.login-box h1 {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"]
+ {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555; /* Darker input background color */
+    color: #fff; /* Light text color */
+}
+button[type="submit"],
+input[type="submit"]{
+    background-color: #76ABAE;
+    color: #fff;
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+a {
+    color: #fff; /* Light link color */
+    text-decoration: none;
+}
+
+.alert {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #5cb85c; /* Green */
+}
+
+.alert-error {
+    background-color: #d9534f; /* Red */
+}
+
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Style for the menu button */
+.menu-btn {
+    cursor: pointer;
+
+}
+
+
+/* Style for the sidebar */
+.sidebar {
+    flex:1;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #0F0E0E;
+    color: #fff;
+    transition: left 0.3s ease;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 20px;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+}
+.user-welcome {
+    margin-left: 20px; /* Adjust the left margin as needed */
+}
+
+/* Dark mode styles */
+
+
+.movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 40px;
+}
+  
+.movie-box {
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #edede9;
+    border-radius:10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    
+}
+  
+.movie-poster {
+    width: 200px; 
+    height: auto;
+    border-radius: 5px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    max-width: 200px;
+    border-radius: 10px; 
+}
+  
+.movie-details {
+    text-align: center;
+}
+  
+.movie-name {
+    font-weight: bold;
+    margin-top: 10px;
+}
+  
+.age-rating,
+.metascore {
+    margin-top: 5px;
+}
+  
+.average-rating {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom:15px;
+}
+
+/* Styling for full star */
+.fas.fa-star {
+    color: gold; /* Change the color of the full star */
+}
+
+/* Styling for half star */
+.fas.fa-star-half-alt {
+    color: gold; /* Change the color of the half star */
+}
+
+/* Styling for empty star */
+.far.fa-star {
+    color: #ccc; /* Change the color of the empty star */
+}
+
+
+.average-rating .stars {
+    display: inline-block;
+    font-size: 20px; /* Adjust the font size of stars */
+    color: gold; /* Color of filled stars */
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.average-rating .stars::before {
+    content: '★★★★★'; /* Unicode star character */
+}
+
+.average-rating .stars::after {
+    content: '★★★★★'; /* Unicode star character */
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ccc; /* Color of empty stars */
+}
+
+.stars {
+    font-size: 20px; /* Adjust the font size of the stars */
+    display: inline-flex; /* Display stars inline */
+    white-space: nowrap; /* Prevent line breaks */
+    overflow: hidden; /* Hide overflowing stars */
+    align-items: center;
+    flex-wrap: nowrap;
+}
+  
+  /* Styles for movie details page */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:20px;
+}
+
+.movie-details-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding:20px;
+    border-radius: 10px;
+}
+.watchlist-btn{
+    background-color: #76ABAE;
+    color:#fff;
+    
+}
+/* Default styling for stars */
+.star-rating .star {
+    font-size: 20px; /* Adjust the size of the stars */
+    color: #ffc107; /* Default color of the stars */
+}
+
+/* Style stars based on rating value */
+.star-rating[data-rating="1"] .star:nth-child(-n+1),
+.star-rating[data-rating="2"] .star:nth-child(-n+2),
+.star-rating[data-rating="3"] .star:nth-child(-n+3),
+.star-rating[data-rating="4"] .star:nth-child(-n+4),
+.star-rating[data-rating="5"] .star:nth-child(-n+5) {
+    color: #ffc107; /* Change color for filled stars */
+}
+
+.left-panel {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.right-panel {
+    flex: 2;
+}
+
+.reviews-container {
+    margin-top: 20px;
+    align-items: center;
+}
+
+.reviews-container h3 {
+    margin-bottom: 10px;
+}
+
+/* Button styles */
+button {
+    background-color: #76ABAE; /* Dark button background color */
+    color: #fff; /* Light button text color */
+    border: none;
+    border-radius: 20px; /* Adjust border radius to make the button more rounded */
+    padding: 10px 20px; /* Adjust padding as needed */
+    cursor: pointer;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #76ABAE; /* Darker button background color on hover */
+}
+/* Review popup */
+.review-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #333; /* Dark background color for the popup */
+    padding: 20px;
+    border-radius: 10px; /* Adjust border radius to make the popup more rounded */
+    z-index: 999;
+    align-items: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.review-popup.active {
+    display: block;
+}
+
+.review-popup textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.review-popup button {
+    background-color: #76ABAE;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    align-items: center;
+    
+}
+
+.review-popup button:hover {
+    background-color: #76ABAE ;
+}
+
+.rating-stars {
+    margin-bottom: 20px;
+}
+
+.stars .star {
+    font-size: 20px;
+    width:20px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.stars .star.selected {
+    color: gold;
+}
+.review-header {
+    text-align: center;
+}
+.review-container {
+    border-top: 1px solid #ccc;
+    padding: 20px 0;
+    margin-top: 20px;
+    text-align: center;
+    
+}
+.review-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.review-user {
+    font-weight: bold;
+    margin-top: 10px;
+}
+.review-rating {
+    margin-top: 10px;
+}
+
+.rating .star {
+    font-size: 20px; /* Adjust the size of the stars */
+}
+
+/* Style for the "No Rating" text */
+.no-rating {
+    color: #999; /* Gray color for the text */
+    font-style: italic; /* Italicize the text */
+}
+.review {
+    position: relative; /* Add position relative for positioning */
+    margin-bottom: 20px; 
+    display: flex;
+    margin-left:30px; 
+    padding:20px;/* Add some spacing between reviews */
+    align-items: center;
+}
+
+.username {
+    position: absolute; /* Position username absolute */
+    top: 0; /* Align username to the top */
+    left: 0; /* Align username to the left */
+}
+
+.rating {
+    position: absolute; /* Position rating absolute */
+    top: 0; /* Align rating to the top */
+    right: 0; /* Align rating to the right */
+    color: #f1c40f; /* Yellow color for the stars */
+}
+
+.review-text {
+    margin-top: 20px;
+    padding:30px; /* Add some spacing between username/rating and review text */
+    text-align: center;
+}
+/*my_reviews.html*/
+body {
+    font-family: 'Roboto Slab';
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.reviews {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+.review img {
+    width: 100px; /* Adjust as needed */
+    height: auto;
+    margin-right: 20px;
+}
+
+.detail {
+    flex: 1;
+    width: 100%;
+    
+}
+.details {
+    flex: 1;
+    width: 100%;
+    padding:20px;
+    
+}
+
+.details h2 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.details p {
+    margin: 5px 0;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}

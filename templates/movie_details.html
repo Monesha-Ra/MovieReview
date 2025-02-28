@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+
+    <header class="header">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <span class="menu-icon">&#9776;</span>
+        </div>
+        <a href="{{ url_for('main_page') }}"> <!-- Add anchor tag around the logo -->
+            <div class="logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Website Logo">
+            </div>
+        </a>
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search for movies...">
+            <i id="search-icon" class="fas fa-search"></i> <!-- Font Awesome search icon -->
+            <div id="search-results"></div>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <br><br>
+        <div class="user-welcome">Welcome, {{ user.username }}</div>
+        <ul>
+            <li><a href="{{ url_for('my_account') }}">My Account</a></li>
+            <li><a href="{{ url_for('my_reviews') }}">My Reviews</a></li>
+            <li><a href="{{ url_for('watchlist') }}">My Watchlist</a></li>
+            <li><a href="{{ url_for('login') }}">Logout</a></li>
+        </ul>
+    </div>
+    
+    <script>
+        var sidebar = document.getElementById('sidebar');
+        
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+        }
+        
+        window.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !document.querySelector('.menu-btn').contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+
+<div class="content">
+    <div class="movie-details-container">
+        <!-- Left panel: Poster and Add Review button -->
+        <div class="left-panel">
+            <img src="{{ movie_details['poster_url'] }}" alt="{{ movie_details['title'] }}" class="movie-poster"><br><br>
+            <button onclick="toggleReviewPopup()">Add Review</button>
+        </div>
+        
+        <!-- Right panel: Overview details -->
+        <div class="right-panel">
+            <h2>{{ movie_details['title'] }}</h2><br>
+            <p>Plot: {{ movie_details['plot'] }}</p><br> 
+            <p>Cast: {{ movie_details['cast'] }}</p><br>
+            <p>Runtime: {{ movie_details['runtime'] }}</p><br>
+            <p>Age Rating: {{ movie_details['age_rating'] }}</p><br>
+            <p>Released Year: {{ movie_details['release_year'] }}</p><br>
+        </div>
+    </div>
+    
+<!-- Reviews section -->
+<div class="reviews-container">
+    <h3 style="text-align: center;">Reviews</h3>
+    {% for review in movie_reviews %}
+    <div class="review">
+        <div class="review-header">
+            <div class="username">{{ review[2] }}</div> <!-- Accessing username from the tuple -->
+            <div class="rating">
+                {% if review[1] is not none %}
+                    {% set rating_value = review[1]|int %}
+                    {% for _ in range(rating_value) %}
+                        <span class="star"><i class="fas fa-star"></i></span>
+                    {% endfor %}
+                {% else %}
+                    <span class="no-rating">No Rating</span> <!-- Displaying "No Rating" if rating value is null -->
+                {% endif %}
+            </div>
+        </div>            
+        <div class="review-text">{{ review[0] }}</div> <!-- Accessing review text from the tuple -->
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+
+
+<!-- Review popup -->
+<div class="review-popup" id="review-popup">
+    <!-- Add a star rating input field -->
+    <form method="POST" action="{{ url_for('movie_details', movie_id=movie_details['id']) }}">
+        <!-- Star rating input field -->
+        <div class="rating-stars">
+            <label for="rating">Your Rating:</label>
+            <!-- Ensure that the name attribute matches the key used in Flask -->
+            <input type="hidden" name="star_rating" id="rating">
+            <div class="stars" onclick="setRating(event)">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+            </div>
+        </div>
+        <!-- Second form for submitting review text -->
+        <form action="{{ url_for('movie_details', movie_id=movie_details['id']) }}" method="post" >
+            <textarea name="review_text" placeholder="Write your review here"></textarea>
+            <button type="submit" >Submit</button>
+        </form>
+    </form>
+
+    
+</div>
+
+<script>
+    // Function to toggle review popup visibility
+    function toggleReviewPopup() {
+        var popup = document.getElementById('review-popup');
+        popup.classList.toggle('active');
+    }
+</script>
+<script>
+    function setRating(event) {
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('rating');
+    stars.forEach(star => {
+        star.classList.remove('selected');
+    });
+    const selectedStar = event.target;
+    const rating = selectedStar.dataset.value;
+    ratingInput.value = rating; // Make sure this line correctly sets the value
+    selectedStar.classList.add('selected');
+    
+    // Select previous stars up to the current one
+    let prevStar = selectedStar.previousElementSibling;
+    while (prevStar) {
+        prevStar.classList.add('selected');
+        prevStar = prevStar.previousElementSibling;
+    }
+}
+
+</script>
+
+</body>
+</html>

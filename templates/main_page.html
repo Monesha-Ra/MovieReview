@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" font-family="Times New Roman">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-HbhMbnMbyEa1wybh9WyS4zTbI8g24InDRZb+HmSnzB2bcn0w83Jtmz+CD6HdMnajVyp/4Qvzl6p00qcrgrM7jg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+
+<header class="header">
+    <div class="menu-btn" onclick="toggleMenu()">
+        <span class="menu-icon">&#9776;</span>
+    </div>
+    <a href="{{ url_for('main_page') }}"> <!-- Add anchor tag around the logo -->
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Website Logo">
+            <div id="search-dropdown"></div>
+        </div>
+    </a>
+    
+    <div class="search-container">
+        <input type="text" id="search-bar" placeholder="Search for movies...">
+        <i id="search-icon" class="fas fa-search"></i> <!-- Font Awesome search icon -->
+        <div id="search-results"></div>
+    </div>
+</header>
+
+<div class="sidebar" id="sidebar">
+    <br><br>
+    <div class="user-welcome">Welcome, {{ user.username }}</div>
+    <ul>
+        <li><a href="{{ url_for('my_account') }}">My Account</a></li>
+        <li><a href="{{ url_for('my_reviews') }}">My Reviews</a></li>
+        <li><a href="{{ url_for('watchlist') }}">My Watchlist</a></li>
+        <li><a href="{{ url_for('login') }}">Logout</a></li>
+    </ul>
+</div>
+
+<script>
+    var sidebar = document.getElementById('sidebar');
+    
+    function toggleMenu() {
+        sidebar.classList.toggle('active');
+    }
+    
+    window.addEventListener('click', function(e) {
+        if (!sidebar.contains(e.target) && !document.querySelector('.menu-btn').contains(e.target)) {
+            sidebar.classList.remove('active');
+        }
+    });
+</script>
+
+<div class="content">
+    <h2>RECENT MOVIES</h2>
+    <div class="movies-container">
+        {% for movie in recent_movies %}
+        <div class="movie-box">
+            <a href="{{ url_for('movie_details', movie_id=movie[0]) }}">
+                <img src="{{ movie[2] }}" alt="{{ movie[1] }}" class="movie-poster">
+            </a>
+            <div class="movie-details">
+                <p class="movie-name">{{ movie[1] }}</p>
+                <p class="age-rating">Age Rating: {{ movie[7] }}</p>
+                <p class="metascore">Metascore: {{ movie[9]}}</p>
+                <div class="average-rating">
+                    Average Rating:<br>
+                    {% if movie[10] is not none %}
+                        {% set rating = movie[10]|round(2) %} <!-- Round average rating to 2 decimal places -->
+                        {% set num_full_stars = rating|int %} <!-- Get the integer part of the rating -->
+                        {% set remainder = rating - num_full_stars %} <!-- Calculate the remainder for partial star -->
+                        
+                        <!-- Display full stars -->
+                        {% for _ in range(num_full_stars) %}
+                            <i class="fas fa-star"></i>
+                        {% endfor %}
+                        
+                        <!-- Display partial star if remainder is greater than 0 -->
+                        {% if remainder > 0 %}
+                            <i class="fas fa-star-half-alt"></i>
+                        {% endif %}
+                        
+                        <!-- Display empty stars to fill the rest of the rating scale -->
+                        {% for _ in range(5 - num_full_stars - (remainder > 0)|int) %}
+                            <i class="far fa-star"></i>
+                        {% endfor %}
+                    {% else %}
+                        No ratings yet
+                    {% endif %}
+                </div>
+                
+                
+                {% if movie_in_watchlist(movie[0]) %}
+                    <form action="{{ url_for('add_to_watchlist') }}" method="post">
+                        <input type="hidden" name="movie_id" value="{{ movie[0] }}">
+                        <input type="hidden" name="title" value="{{ movie[1] }}">
+                        <button type="submit" class="watchlist-btn">Added</button>
+                    </form>
+                {% else %}
+                    <form action="{{ url_for('add_to_watchlist') }}" method="post">
+                        <input type="hidden" name="movie_id" value="{{ movie[0] }}">
+                        <input type="hidden" name="title" value="{{ movie[1] }}">
+                        <button type="submit" class="watchlist-btn">+ Add to Watchlist</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const searchBar = document.getElementById('search-bar');
+    const searchIcon = document.getElementById('search-icon');
+    const searchResults = document.getElementById('search-results');
+
+    function performSearch(query) {
+        fetch(`/search?q=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                searchResults.innerHTML = '';
+                data.forEach(movie => {
+                    const movieId = movie[0];
+                    const movieName = movie[1];
+                    const movieLink = document.createElement('a');
+                    movieLink.textContent = movieName;
+                    movieLink.href = `/movie/${movieId}`;
+                    const movieElement = document.createElement('div');
+                    movieElement.appendChild(movieLink);
+                    searchResults.appendChild(movieElement);
+                });
+            });
+    }
+
+    searchBar.addEventListener('input', function() {
+        const inputValue = searchBar.value.trim();
+        if (inputValue.length > 0) {
+            performSearch(inputValue);
+        } else {
+            searchResults.innerHTML = '';
+        }
+    });
+
+    searchIcon.addEventListener('click', function() {
+        const inputValue = searchBar.value.trim();
+        if (inputValue.length > 0) {
+            performSearch(inputValue);
+        }
+    });
+});
+
+
+</script>
+
+</body>
+</html>

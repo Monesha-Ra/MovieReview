@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Watchlist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<script>
+    var sidebar = document.getElementById('sidebar');
+    
+    function toggleMenu() {
+        sidebar.classList.toggle('active');
+    }
+    
+    window.addEventListener('click', function(e) {
+        if (!sidebar.contains(e.target) && !document.querySelector('.menu-btn').contains(e.target)) {
+            sidebar.classList.remove('active');
+        }
+    });
+</script>
+<body>
+
+    <header class="header">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <span class="menu-icon">&#9776;</span>
+        </div>
+        <div class="logo">
+            <a href="{{ url_for('main_page') }}">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Website Logo">
+            </a>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search for movies...">
+            <i id="search-icon" class="fas fa-search"></i> <!-- Font Awesome search icon -->
+            <div id="search-results"></div>
+        </div>
+    </header>
+    <div class="sidebar" id="sidebar">
+        <br><br>
+        <div class="user-welcome">Welcome, {{ user.username }}</div>
+        <ul>
+            <li><a href="{{ url_for('my_account') }}">My Account</a></li>
+            <li><a href="{{ url_for('my_reviews') }}">My Reviews</a></li>
+            <li><a href="{{ url_for('watchlist') }}">My Watchlist</a></li>
+            <li><a href="{{ url_for('login') }}">Logout</a></li>
+        </ul>
+    </div>
+    <script>
+        var sidebar = document.getElementById('sidebar');
+        
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+        }
+        
+        window.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !document.querySelector('.menu-btn').contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+
+
+<div class="content">
+    <h2>My Watchlist</h2>
+    <div class="movies-container">
+        {% for movie in watchlist_movies %}
+        <div class="movie-box">
+            <img src="{{ movie[1] }}" alt="{{ movie[0] }}" class="movie-poster">
+            <div class="movie-details">
+                <p class="movie-name">{{ movie[0] }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
