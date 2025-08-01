@@ -159,8 +159,7 @@ def main_page():
 def update_cumulative_ratings():
     try:
         # Connect to the database
-        connection = mysql.connector.connect(host="Monesha", user="Monesha", password="SriRam33Lak$", database="movie_review_sys")
-
+        connection = mysql.connector.connect(user=os.getenv('DB_USER'), password=os.getenv('DB_PASSWORD'), host=os.getenv('DB_HOST'), database=os.getenv('DB_NAME'))
         cursor = connection.cursor()
         cursor.execute("""
             INSERT INTO cumulative_ratings (movie_id, average_rating, number_of_ratings)
@@ -660,7 +659,7 @@ def add_to_watchlist():
 def establish_connection():
     try:
         # Connect to the database
-        cnx = mysql.connector.connect(user='Monesha', password='SriRam33Lak$', host='Monesha', database='movie_review_sys')
+        cnx = mysql.connector.connect(user=os.getenv('DB_USER'), password=os.getenv('DB_PASSWORD'), host=os.getenv('DB_HOST'), database=os.getenv('DB_NAME'))
         print("Connected to the database successfully!")
         return cnx
     except mysql.connector.Error as err:
